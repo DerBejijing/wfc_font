@@ -30,7 +30,11 @@ public class WFC_Algorithm {
     public void add_texture(String file) {
         int index_dot = file.indexOf(".");
         String connections_str = file.substring(index_dot - 4, index_dot);
-        this.TEXTURES.add(new Texture(boolean(connections_str.charAt(0)), boolean(connections_str.charAt(1)), boolean(connections_str.charAt(2)), boolean(connections_str.charAt(3)), loadImage(file)));
+
+        println(connections_str);
+        //println(file + " " + (connections_str.charAt(0) == '1') + " " + (connections_str.charAt(1) == '1') + " " + boolean(connections_str.charAt(2)) + " " + boolean(connections_str.charAt(3)));
+
+        this.TEXTURES.add(new Texture((connections_str.charAt(0)  == '1'), (connections_str.charAt(1)  == '1'), (connections_str.charAt(2) == '1'), (connections_str.charAt(3) == '1'), loadImage(file)));
     }
 
 
@@ -59,6 +63,7 @@ public class WFC_Algorithm {
         }
 
         this.tile_list = new Tile_List(this.CELLS_X, this.CELLS_Y, this.INITIAL_WEIGHT_BLANK, this.TEXTURES);
+        this.ready = true;
     }
 
 
@@ -86,7 +91,12 @@ public class WFC_Algorithm {
 
     // display the computed image
     public void render() {
-
+        for(int x = 0; x < WIDTH; ++x) {
+            for(int y = 0; y < HEIGHT; ++y) {
+                Tile t = this.tile_list.get_tile(x, y);
+                if(t.collapsed) image(t.state.texture_file, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            }
+        }
     }
 
 
@@ -138,7 +148,7 @@ public class WFC_Algorithm {
     private class Tile_List {
         
         private ArrayList<Tile> tile_list;
-        private ArrayList<Texture> textures;
+        //private ArrayList<Texture> textures;
         
         private int cells_x;
         private int cells_y;
@@ -151,7 +161,7 @@ public class WFC_Algorithm {
             this.cells_y = cells_y;
 
             this.tile_list = new ArrayList<Tile>();
-            this.textures = new ArrayList<Texture>();
+            //this.textures = new ArrayList<Texture>();
 
             this.initial_weight_blank = initial_weight_blank;
             
@@ -179,9 +189,7 @@ public class WFC_Algorithm {
                 uncollapsed.remove(t);
                 this.update_tiles();
             }
-            
-            paint = false;
-            this.clean();
+            //this.clean();
         }
 
 
@@ -234,51 +242,51 @@ public class WFC_Algorithm {
             boolean changed = false;
             
             for(int dir = 0; dir < 4; ++dir) {
-            Tile neighbor = get_neighbor(t, dir);
-            
-            if(neighbor != null) if(!neighbor.collapsed) {
+                Tile neighbor = get_neighbor(t, dir);
                 
-                boolean connect_neighbor = false;
-                boolean connect_neighbor_force = false;
-                
-                if(!t.collapsed) {
-                    for(Texture tt : t.states) if(tt.connections[dir]) connect_neighbor = true;
-                }
-                else if(t.state.connections[dir]) {
-                    connect_neighbor = true;
-                    connect_neighbor_force = true;
-                }
-                
-                int neighbor_dir_check = 0;
-                if(dir == 0) neighbor_dir_check = 2;
-                if(dir == 1) neighbor_dir_check = 3;
-                if(dir == 2) neighbor_dir_check = 0;
-                if(dir == 3) neighbor_dir_check = 1;
-                
-                // if the tile does not connect to the neighbor, make the neighbor unable to do so
-                // this can be done better
-                if(!connect_neighbor) {    
-                    for(int i = neighbor.states.size() - 1; i >= 0; i--) {
-                        Texture n_tt = neighbor.states.get(i);
-                        if(n_tt.connections[neighbor_dir_check]) {
-                            neighbor.states.remove(n_tt);
-                            changed = true;
+                if(neighbor != null) if(!neighbor.collapsed) {
+                    //println("test");
+                    boolean connect_neighbor = false;
+                    boolean connect_neighbor_force = false;
+                    
+                    
+                    if(!t.collapsed) {
+                        for(Texture tt : t.states) if(tt.connections[dir]) connect_neighbor = true;
+                    }
+                    else if(t.state.connections[dir]) {
+                        connect_neighbor = true;
+                        connect_neighbor_force = true;
+                    }
+                    
+                    int neighbor_dir_check = 0;
+                    if(dir == 0) neighbor_dir_check = 2;
+                    if(dir == 1) neighbor_dir_check = 3;
+                    if(dir == 2) neighbor_dir_check = 0;
+                    if(dir == 3) neighbor_dir_check = 1;
+                    
+                    // if the tile does not connect to the neighbor, make the neighbor unable to do so
+                    // this can be done better
+                    if(!connect_neighbor) {    
+                        for(int i = neighbor.states.size() - 1; i >= 0; i--) {
+                            Texture n_tt = neighbor.states.get(i);
+                            if(n_tt.connections[neighbor_dir_check]) {
+                                neighbor.states.remove(n_tt);
+                                changed = true;
+                            }
                         }
                     }
-                }
-                else if(connect_neighbor_force) { 
-                    for(int i = neighbor.states.size() - 1; i >= 0; i--) {
-                        Texture n_tt = neighbor.states.get(i);
-                        if(!n_tt.connections[neighbor_dir_check]) {
-                            neighbor.states.remove(n_tt);
-                            changed = true;
+                    else if(connect_neighbor_force) { 
+                        for(int i = neighbor.states.size() - 1; i >= 0; i--) {
+                            Texture n_tt = neighbor.states.get(i);
+                            if(!n_tt.connections[neighbor_dir_check]) {
+                                neighbor.states.remove(n_tt);
+                                changed = true;
+                            }
                         }
                     }
+                    
+                    if(neighbor.can_collapse()) this.collapse_tile(neighbor);
                 }
-                
-                if(neighbor.can_collapse()) this.collapse_tile(neighbor);
-            }
-            
             }
             return changed;
         }
