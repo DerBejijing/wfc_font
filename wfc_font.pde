@@ -1,8 +1,8 @@
 final int TILES = 12;
 
-final int WIDTH = 20;
-final int HEIGHT = 20;
-final int CELL_SIZE = 50;
+final int WIDTH = 160;
+final int HEIGHT = 160;
+final int CELL_SIZE = 5;
 
 final int PEN_RADIUS = 2;
 
@@ -76,6 +76,7 @@ void keyPressed() {
     }
     if (key == 'p') paint =! paint;
     if (key == 'f') algorithm.save_image();
+    if (key == 'i') algorithm.load_image();
 }
 
 

@@ -30,10 +30,6 @@ public class WFC_Algorithm {
     public void add_texture(String file) {
         int index_dot = file.indexOf(".");
         String connections_str = file.substring(index_dot - 4, index_dot);
-
-        println(connections_str);
-        //println(file + " " + (connections_str.charAt(0) == '1') + " " + (connections_str.charAt(1) == '1') + " " + boolean(connections_str.charAt(2)) + " " + boolean(connections_str.charAt(3)));
-
         this.TEXTURES.add(new Texture((connections_str.charAt(0)  == '1'), (connections_str.charAt(1)  == '1'), (connections_str.charAt(2) == '1'), (connections_str.charAt(3) == '1'), loadImage(file)));
     }
 
@@ -100,6 +96,44 @@ public class WFC_Algorithm {
     }
 
 
+    // select a file to be loaded and processed
+    public void load_image() {
+        selectInput("Select file to process", "compute_image", new File(""), algorithm);
+    }
+
+
+    public void compute_image(File selected) {
+        if(selected == null) return;
+
+        PImage current = loadImage(selected.getAbsolutePath());
+
+        if(current == null) return;
+
+        current.resize(this.CELLS_X * this.CELL_SIZE, this.CELLS_Y * this.CELL_SIZE);
+
+        for(int x = 0; x < this.CELLS_X; ++x) {
+            for(int y = 0; y < this.CELLS_Y; ++y) {
+                
+                PImage sub = current.get(x * this.CELL_SIZE, y * this.CELL_SIZE, this.CELL_SIZE, this.CELL_SIZE);
+                sub.loadPixels();
+
+                int sub_size = sub.width * sub.height;
+                float sub_gray_average = 0;
+
+                for(int i = 0; i < sub_size; ++i) sub_gray_average += brightness(sub.pixels[i]);
+
+                sub_gray_average /= sub_size;
+
+                float average_gray = map(sub_gray_average, 0, 256, 0, 1);
+                this.set_cell_weight(x, y, average_gray);
+            }
+        }
+
+        this.solve();
+        this.render();
+    }
+
+
 
     // store texture and possible connections
     private class Texture {
@@ -161,7 +195,6 @@ public class WFC_Algorithm {
             this.cells_y = cells_y;
 
             this.tile_list = new ArrayList<Tile>();
-            //this.textures = new ArrayList<Texture>();
 
             this.initial_weight_blank = initial_weight_blank;
             
@@ -189,7 +222,7 @@ public class WFC_Algorithm {
                 uncollapsed.remove(t);
                 this.update_tiles();
             }
-            //this.clean();
+            this.clean();
         }
 
 
