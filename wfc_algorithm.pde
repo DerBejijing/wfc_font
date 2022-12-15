@@ -4,7 +4,7 @@ public class WFC_Algorithm {
     private int CELLS_Y;
     private int CELL_SIZE;
 
-    private float initial_weight_blank;
+    private float INITIAL_WEIGHT_BLANK;
 
     private ArrayList<Texture> TEXTURES;
     private ArrayList<Texture> TEXTURES_END;
@@ -26,16 +26,18 @@ public class WFC_Algorithm {
     }
 
 
-    // add a texture, specifying connections
-    public void add_texture(String file, boolean up, boolean right, boolean down, boolean left) {
-        this.TEXTURES.add(new Texture(up, right, down, left, loadImage(file)));
+    // add a texture
+    public void add_texture(String file) {
+        int index_dot = file.indexOf(".");
+        String connections_str = file.substring(index_dot - 4, index_dot);
+        this.TEXTURES.add(new Texture(boolean(connections_str.charAt(0)), boolean(connections_str.charAt(1)), boolean(connections_str.charAt(2)), boolean(connections_str.charAt(3)), loadImage(file)));
     }
 
 
     // add a texture, specifying where it connects to
     // used to prohibit some paths from going to nowhere
     public void add_texture_end(String file, int direction) {
-        this.TEXTURES_END.add(new Texture(up, right, down, left, loadImage(file)));
+        this.TEXTURES_END.add(new Texture((direction == 0), (direction == 1), (direction == 2), (direction == 3), loadImage(file)));
     }
 
 
@@ -43,10 +45,11 @@ public class WFC_Algorithm {
     public void set_cell_weight(int x, int y, float weight) {
         if(x < 0 || x >= this.CELLS_X) return;
         if(y < 0 || y >= this.CELLS_Y) return;
+
         this.tile_list.get_tile(x, y).chance_blank = weight;
     }
 
-
+/*
     // setup some things
     public void prepare() {
         if(this.TEXTURES.size() == 0 || this.TEXTURES_END.size() == 0) {
@@ -55,8 +58,7 @@ public class WFC_Algorithm {
         }
 
         this.tile_list = new Tile_List(this.CELLS_X, this.CELLS_Y, this.INITIAL_WEIGHT_BLANK this.TEXTURES);
-        return;
-    }
+    }*/
 
 
     // solves the wave function
@@ -71,7 +73,7 @@ public class WFC_Algorithm {
 
 
     // saves the result
-    public void save() {
+    public void save_image() {
         save(hour() + "-" + minute() + "-" + second() + ".png");
     }
 
@@ -79,6 +81,13 @@ public class WFC_Algorithm {
     // write the states of all tiles to a file
     // may be used to create a higher-quality image
     public void save_data() {}
+
+
+    // display the computed image
+    public void render() {
+
+    }
+
 
 
     // store texture and possible connections
