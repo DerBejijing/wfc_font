@@ -1,8 +1,8 @@
 final int TILES = 12;
 
-final int WIDTH = 160;
-final int HEIGHT = 160;
-final int CELL_SIZE = 5;
+final int WIDTH = 10;
+final int HEIGHT = 10;
+final int CELL_SIZE = 50;
 
 final int PEN_RADIUS = 9;
 
@@ -25,15 +25,16 @@ void setup() {
     algorithm.add_texture("files_7/1010.png");
     algorithm.add_texture("files_7/0101.png");
 
-    algorithm.add_texture("files_7/1000.png");
-    algorithm.add_texture("files_7/0100.png");
-    algorithm.add_texture("files_7/0010.png");
-    algorithm.add_texture("files_7/0001.png");
-
     algorithm.add_texture("files_7/1110.png");
     algorithm.add_texture("files_7/0111.png");
     algorithm.add_texture("files_7/1011.png");
     algorithm.add_texture("files_7/1101.png");
+
+    algorithm.add_texture_end("files_7/1000.png");
+    algorithm.add_texture_end("files_7/0100.png");
+    algorithm.add_texture_end("files_7/0010.png");
+    algorithm.add_texture_end("files_7/0001.png");
+    algorithm.prepare();
 
 
     for(int x = 0; x < WIDTH; ++x) {
@@ -55,7 +56,7 @@ void mouseDragged() {
         for(int x = -1 * PEN_RADIUS; x < PEN_RADIUS; ++x) {
             for(int y = -1 * PEN_RADIUS; y < PEN_RADIUS; ++y) {
                 
-                // SET WEIGHT
+                algorithm.set_cell_weight(x, y, 0.0f);
                 
             }
         }

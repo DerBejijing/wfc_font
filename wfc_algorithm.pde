@@ -36,8 +36,10 @@ public class WFC_Algorithm {
 
     // add a texture, specifying where it connects to
     // used to prohibit some paths from going to nowhere
-    public void add_texture_end(String file, int direction) {
-        this.TEXTURES_END.add(new Texture((direction == 0), (direction == 1), (direction == 2), (direction == 3), loadImage(file)));
+    public void add_texture_end(String file) {
+        int index_dot = file.indexOf(".");
+        String connections_str = file.substring(index_dot - 4, index_dot);
+        this.TEXTURES_END.add(new Texture(boolean(connections_str.charAt(0)), boolean(connections_str.charAt(1)), boolean(connections_str.charAt(2)), boolean(connections_str.charAt(3)), loadImage(file)));
     }
 
 
@@ -45,11 +47,10 @@ public class WFC_Algorithm {
     public void set_cell_weight(int x, int y, float weight) {
         if(x < 0 || x >= this.CELLS_X) return;
         if(y < 0 || y >= this.CELLS_Y) return;
-
         this.tile_list.get_tile(x, y).chance_blank = weight;
     }
 
-/*
+
     // setup some things
     public void prepare() {
         if(this.TEXTURES.size() == 0 || this.TEXTURES_END.size() == 0) {
@@ -57,8 +58,8 @@ public class WFC_Algorithm {
             return;
         }
 
-        this.tile_list = new Tile_List(this.CELLS_X, this.CELLS_Y, this.INITIAL_WEIGHT_BLANK this.TEXTURES);
-    }*/
+        this.tile_list = new Tile_List(this.CELLS_X, this.CELLS_Y, this.INITIAL_WEIGHT_BLANK, this.TEXTURES);
+    }
 
 
     // solves the wave function
@@ -162,6 +163,7 @@ public class WFC_Algorithm {
                     this.tile_list.add(t_add);
                 }
             }
+            println(this.tile_list.size());
         }
 
 
