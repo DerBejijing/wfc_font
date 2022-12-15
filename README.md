@@ -2,9 +2,9 @@
 Generate fonts using wave function collapse
 
 # About  
-This sketch utilizes the wave functino collapse algorithm (or rather my interpretation of it) to generate images.  
+This sketch utilizes the wave function collapse algorithm (or rather my interpretation of it) to generate images.  
 This may be used for various things, including, but not limited to:
-- generating fonts (my main goal)  
+- generating fonts (my primary goal)  
 - alternative to grayscaling images  
 - generating nice patterns..  
 
