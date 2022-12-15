@@ -7,6 +7,7 @@ final int CELL_SIZE = 5;
 final int PEN_RADIUS = 9;
 
 
+/*
 // store texture and possible connections
 class Texture {
   // up, right, down, left
@@ -238,7 +239,7 @@ class Tile_List {
     for(boolean b : t.state.connections) print(b + " ");
     println();
   }
-}
+}*/
 
 
 Tile_List grid;
