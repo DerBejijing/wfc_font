@@ -27,3 +27,8 @@ All used textures are in "files_0". You can put your own tiles in it, but:
 - they should have a 1:1 ratio  
 - they must be named by their connectivity in binary. 1 for connection, 0 for no connection. The cycle is up, right, bottom, left.  
 - they must end in .png  
+
+# TODO  
+- make different tiles accessible from within the prrogram  
+- user should not have to restart the sketch when creating a new image  
+- fix a weird screen-ration bug...  
