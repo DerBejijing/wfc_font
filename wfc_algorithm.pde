@@ -357,7 +357,7 @@ public class WFC_Algorithm {
 
         // sets a tile to one of it's possible states
         public void collapse_tile(Tile t) {
-            if(random(1) <= t.chance_blank) {
+            if(random(1) < t.chance_blank + 0.01) {
                 t.state = t.states.get(0);
                 t.collapsed = true;
                 return;
