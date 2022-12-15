@@ -77,6 +77,7 @@ void keyPressed() {
     if (key == 'p') paint =! paint;
     if (key == 'f') algorithm.save_image();
     if (key == 'i') algorithm.load_image();
+    if (key == 'c') algorithm.clean(); 
 }
 
 

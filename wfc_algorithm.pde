@@ -109,6 +109,7 @@ public class WFC_Algorithm {
 
         if(current == null) return;
 
+        println("calculating average brightness for each cell...");
         current.resize(this.CELLS_X * this.CELL_SIZE, this.CELLS_Y * this.CELL_SIZE);
 
         for(int x = 0; x < this.CELLS_X; ++x) {
@@ -129,9 +130,18 @@ public class WFC_Algorithm {
             }
         }
 
+        println("solving wave function...");
         this.solve();
         this.render();
     }
+
+
+    // post processing by adding in end-caps
+    public void clean() {
+        this.tile_list.clean();
+        this.render();
+    }
+
 
 
 
@@ -222,7 +232,7 @@ public class WFC_Algorithm {
                 uncollapsed.remove(t);
                 this.update_tiles();
             }
-            this.clean();
+            //this.clean();
         }
 
 
