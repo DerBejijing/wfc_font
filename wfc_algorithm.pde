@@ -1,27 +1,88 @@
 public class WFC_Algorithm {
     
-    public WFC_Algorithm(int cells_x, int cells_y) {
+    private int CELLS_X;
+    private int CELLS_Y;
+    private int CELL_SIZE;
 
+    private float initial_weight_blank;
+
+    private ArrayList<Texture> TEXTURES;
+    private ArrayList<Texture> TEXTURES_END;
+
+    private Tile_List tile_list;
+
+    private boolean ready;
+
+    public WFC_Algorithm(int cells_x, int cells_y, int cell_size, float initial_weight_blank) {
+        this.CELLS_X = cells_x;
+        this.CELLS_Y = cells_y;
+        this.CELL_SIZE = cell_size;
+        this.INITIAL_WEIGHT_BLANK = initial_weight_blank;
+
+        this.TEXTURES = new ArrayList<Texture>();
+        this.TEXTURES_END = new ArrayList<Texture>();
+
+        this.ready = false;
     }
 
-    // add a texture, specifying connections and a weight to be used
-    public void add_texture(String file, boolean up, boolean right, boolean down, boolean left, float weight) {}
+
+    // add a texture, specifying connections
+    public void add_texture(String file, boolean up, boolean right, boolean down, boolean left) {
+        this.TEXTURES.add(new Texture(up, right, down, left, loadImage(file)));
+    }
+
 
     // add a texture, specifying where it connects to
     // used to prohibit some paths from going to nowhere
-    public void add_texture_end(String file, int direction) {}
+    public void add_texture_end(String file, int direction) {
+        this.TEXTURES_END.add(new Texture(up, right, down, left, loadImage(file)));
+    }
+
 
     // set the weight for a cell to be populated
-    public void set_cell_weight(int x, int y, float weight) {}
+    public void set_cell_weight(int x, int y, float weight) {
+        if(x < 0 || x >= this.CELLS_X) return;
+        if(y < 0 || y >= this.CELLS_Y) return;
+        this.tile_list.get_tile(x, y).chance_blank = weight;
+    }
+
+
+    // setup some things
+    public void prepare() {
+        if(this.TEXTURES.size() == 0 || this.TEXTURES_END.size() == 0) {
+            println("No textures set");
+            return;
+        }
+
+        this.tile_list = new Tile_List(this.CELLS_X, this.CELLS_Y, this.INITIAL_WEIGHT_BLANK this.TEXTURES);
+        return;
+    }
+
 
     // solves the wave function
-    public void solve() {}
+    public void solve() {
+        if(!this.ready) {
+            println("WFC_Algorithm::prepare() not called");
+            return;
+        }
+
+        this.tile_list.solve();
+    }
+
 
     // saves the result
-    public void save() {}
+    public void save() {
+        save(hour() + "-" + minute() + "-" + second() + ".png");
+    }
+
+
+    // write the states of all tiles to a file
+    // may be used to create a higher-quality image
+    public void save_data() {}
+
 
     // store texture and possible connections
-    class Texture {
+    private class Texture {
         public boolean connections[];
         public PImage texture_file;
 
@@ -33,7 +94,7 @@ public class WFC_Algorithm {
 
 
     // class to store the position and possible states of a tile
-    class Tile {
+    private class Tile {
         public int x;
         public int y;
         public Texture state;
@@ -41,13 +102,13 @@ public class WFC_Algorithm {
         public boolean collapsed;
         public float chance_blank;
         
-        public Tile(int x, int y) {
+        public Tile(int x, int y, float initial_weight_blank) {
             this.x = x;
             this.y = y;
             this.state = null;
             this.states = new ArrayList<Texture>();
             this.collapsed = false;
-            this.chance_blank = 1.0f;
+            this.chance_blank = initial_weight_blank;
         }
         
         public boolean can_collapse() {
@@ -64,22 +125,29 @@ public class WFC_Algorithm {
 
 
     // contains a list of all tiles and the wfc algorithm
-    class Tile_List {
+    private class Tile_List {
+        
         private ArrayList<Tile> tile_list;
         private ArrayList<Texture> textures;
+        
         private int cells_x;
         private int cells_y;
+        
+        private float initial_weight_blank;
 
 
-        public Tile_List(int cells_x, int cells_y, ArrayList<Texture> textures) {
+        public Tile_List(int cells_x, int cells_y, float initial_weight_blank, ArrayList<Texture> textures) {
             this.cells_x = cells_x;
             this.cells_y = cells_y;
+
             this.tile_list = new ArrayList<Tile>();
             this.textures = new ArrayList<Texture>();
+
+            this.initial_weight_blank = initial_weight_blank;
             
             for(int y = 0; y < cells_y; ++y) {
                 for(int x = 0; x < cells_x; ++x) {
-                    Tile t_add = new Tile(x, y);
+                    Tile t_add = new Tile(x, y, initial_weight_blank);
                     
                     for(Texture t : textures) t_add.states.add(t);
                     this.tile_list.add(t_add);
