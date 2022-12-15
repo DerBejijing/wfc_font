@@ -18,7 +18,7 @@ void settings() {
 void setup() {
     frameRate(10);
 
-    algorithm = new WFC_Algorithm(WIDTH, HEIGHT, CELL_SIZE, 0.5f);
+    algorithm = new WFC_Algorithm(WIDTH, HEIGHT, CELL_SIZE, 1.0f);
     algorithm.add_texture("files_0/0000.png");
     algorithm.add_texture("files_0/1111.png");
 
@@ -70,14 +70,13 @@ void mouseDragged() {
 
 
 void keyPressed() {
-    if (key == 's') {
-        algorithm.solve();
-        algorithm.render();
-    }
+    if (key == 's') algorithm.solve();
     if (key == 'p') paint =! paint;
     if (key == 'f') algorithm.save_image();
     if (key == 'i') algorithm.load_image();
     if (key == 'c') algorithm.clean(); 
+
+    algorithm.render();
 }
 
 

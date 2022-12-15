@@ -39,7 +39,7 @@ public class WFC_Algorithm {
     public void add_texture_end(String file) {
         int index_dot = file.indexOf(".");
         String connections_str = file.substring(index_dot - 4, index_dot);
-        this.TEXTURES_END.add(new Texture(boolean(connections_str.charAt(0)), boolean(connections_str.charAt(1)), boolean(connections_str.charAt(2)), boolean(connections_str.charAt(3)), loadImage(file)));
+        this.TEXTURES_END.add(new Texture((connections_str.charAt(0)  == '1'), (connections_str.charAt(1)  == '1'), (connections_str.charAt(2) == '1'), (connections_str.charAt(3) == '1'), loadImage(file)));
     }
 
 
@@ -58,7 +58,7 @@ public class WFC_Algorithm {
             return;
         }
 
-        this.tile_list = new Tile_List(this.CELLS_X, this.CELLS_Y, this.INITIAL_WEIGHT_BLANK, this.TEXTURES);
+        this.tile_list = new Tile_List(this.CELLS_X, this.CELLS_Y, this.INITIAL_WEIGHT_BLANK, this.TEXTURES, this.TEXTURES_END);
         this.ready = true;
     }
 
@@ -70,7 +70,9 @@ public class WFC_Algorithm {
             return;
         }
 
+        println("solving wave function...");
         this.tile_list.solve();
+        println("done");
     }
 
 
@@ -130,9 +132,7 @@ public class WFC_Algorithm {
             }
         }
 
-        println("solving wave function...");
         this.solve();
-        this.render();
     }
 
 
@@ -192,19 +192,22 @@ public class WFC_Algorithm {
     private class Tile_List {
         
         private ArrayList<Tile> tile_list;
-        //private ArrayList<Texture> textures;
-        
+        private ArrayList<Texture> textures;
+        private ArrayList<Texture> textures_end;
+
         private int cells_x;
         private int cells_y;
         
         private float initial_weight_blank;
 
 
-        public Tile_List(int cells_x, int cells_y, float initial_weight_blank, ArrayList<Texture> textures) {
+        public Tile_List(int cells_x, int cells_y, float initial_weight_blank, ArrayList<Texture> textures, ArrayList<Texture> textures_end) {
             this.cells_x = cells_x;
             this.cells_y = cells_y;
 
             this.tile_list = new ArrayList<Tile>();
+            this.textures = textures;
+            this.textures_end = textures_end;
 
             this.initial_weight_blank = initial_weight_blank;
             
@@ -239,7 +242,7 @@ public class WFC_Algorithm {
         // find all tiles that end in nothing and plase end-caps
         private void clean() {
             for(Tile t : this.tile_list) {
-                if(t.state != TEXTURES.get(0)) {
+                if(t.state != this.textures.get(0)) {
                     
                     for(int dir = 0; dir < 4; ++dir) {
                         Tile neighbor = get_neighbor(t, dir);
@@ -248,11 +251,11 @@ public class WFC_Algorithm {
                             
                             // check if tile connects to dir
                             if(t.state.connections[dir]) {
-                                if(neighbor.state == TEXTURES.get(0)) {
-                                    if(dir == 0) neighbor.state = TEXTURES_END.get(2);
-                                    if(dir == 1) neighbor.state = TEXTURES_END.get(3);
-                                    if(dir == 2) neighbor.state = TEXTURES_END.get(0);
-                                    if(dir == 3) neighbor.state = TEXTURES_END.get(1);
+                                if(neighbor.state == this.textures.get(0)) {
+                                    if(dir == 0) neighbor.state = this.textures_end.get(2);
+                                    if(dir == 1) neighbor.state = this.textures_end.get(3);
+                                    if(dir == 2) neighbor.state = this.textures_end.get(0);
+                                    if(dir == 3) neighbor.state = this.textures_end.get(1);
                                 }
                             }
                         }
