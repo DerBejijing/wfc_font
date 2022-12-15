@@ -258,39 +258,6 @@ void setup() {
   TEXTURES = new ArrayList<Texture>();
   TEXTURES_END = new ArrayList<Texture>();
   
-  /*
-  TEXTURES.add(new Texture(false, false, false, false, loadImage("files_5/0000_0.png")));
-  
-  TEXTURES.add(new Texture(true, true, false, false, loadImage("files_5/1100_0.png")));
-  TEXTURES.add(new Texture(false, true, true, false, loadImage("files_5/0110_0.png")));
-  TEXTURES.add(new Texture(false, false, true, true, loadImage("files_5/0011_0.png")));
-  TEXTURES.add(new Texture(true, false, false, true, loadImage("files_5/1001_0.png")));
-  
-  TEXTURES.add(new Texture(true, true, true, false, loadImage("files_5/1110_0.png")));
-  TEXTURES.add(new Texture(false, true, true, true, loadImage("files_5/0111_0.png")));
-  TEXTURES.add(new Texture(true, false, true, true, loadImage("files_5/1011_0.png")));
-  TEXTURES.add(new Texture(true, true, false, true, loadImage("files_5/1101_0.png")));
-  
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_5/1010_0.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_5/0101_0.png")));
-  
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_5/1010_0.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_5/0101_0.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_5/1010_0.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_5/0101_0.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_5/1010_0.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_5/0101_0.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_5/1010_0.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_5/0101_0.png")));
-  
-  TEXTURES.add(new Texture(true, true, true, true, loadImage("files_5/1111_0.png")));
-  
-  TEXTURES_END.add(new Texture(true, false, false, false, loadImage("files_5/1000_0.png")));
-  TEXTURES_END.add(new Texture(false, true, false, false, loadImage("files_5/0100_0.png")));
-  TEXTURES_END.add(new Texture(false, false, true, false, loadImage("files_5/0010_0.png")));
-  TEXTURES_END.add(new Texture(false, false, false, true, loadImage("files_5/0001_0.png")));
-  */
-  
   TEXTURES.add(new Texture(false, false, false, false, loadImage("files_7/0000.png")));
   
   TEXTURES.add(new Texture(true, true, false, false, loadImage("files_7/1100.png")));
@@ -308,12 +275,6 @@ void setup() {
   
   TEXTURES.add(new Texture(true, false, true, false, loadImage("files_7/1010.png")));
   TEXTURES.add(new Texture(false, true, false, true, loadImage("files_7/0101.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_7/1010.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_7/0101.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_7/1010.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_7/0101.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_7/1010.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_7/0101.png")));
   
   TEXTURES.add(new Texture(true, true, true, true, loadImage("files_7/1111.png")));
   
@@ -321,45 +282,6 @@ void setup() {
   TEXTURES_END.add(new Texture(false, true, false, false, loadImage("files_7/0100.png")));
   TEXTURES_END.add(new Texture(false, false, true, false, loadImage("files_7/0010.png")));
   TEXTURES_END.add(new Texture(false, false, false, true, loadImage("files_7/0001.png")));
-  
-  /*
-  TEXTURES.add(new Texture(false, false, false, false, loadImage("files_3/0000_0.png")));
-  
-  TEXTURES.add(new Texture(true, true, true, true, loadImage("files_3/1111_0.png")));
-  TEXTURES.add(new Texture(true, true, true, true, loadImage("files_3/1111_1.png")));
-  
-  //TEXTURES.add(new Texture(true, true, true, true, loadImage("files_3/1111_2.png")));
-  //TEXTURES.add(new Texture(true, true, true, true, loadImage("files_3/1111_3.png")));
-  
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_3/1010_0.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_3/1010_1.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_3/0101_0.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_3/0101_1.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_3/1010_0.png")));
-  TEXTURES.add(new Texture(true, false, true, false, loadImage("files_3/1010_1.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_3/0101_0.png")));
-  TEXTURES.add(new Texture(false, true, false, true, loadImage("files_3/0101_1.png")));
-  
-  
-  TEXTURES.add(new Texture(true, false, false, false, loadImage("files_3/1000_1.png")));
-  TEXTURES.add(new Texture(false, true, false, false, loadImage("files_3/0100_1.png")));
-  TEXTURES.add(new Texture(false, false, true, false, loadImage("files_3/0010_1.png")));
-  TEXTURES.add(new Texture(false, false, false, true, loadImage("files_3/0001_1.png")));
-  
-  TEXTURES.add(new Texture(true, true, false, false, loadImage("files_3/1100_0.png")));
-  TEXTURES.add(new Texture(false, true, true, false, loadImage("files_3/0110_0.png")));
-  TEXTURES.add(new Texture(false, false, true, true, loadImage("files_3/0011_0.png")));
-  TEXTURES.add(new Texture(true, false, false, true, loadImage("files_3/1001_0.png")));
-  TEXTURES.add(new Texture(true, true, false, false, loadImage("files_3/1100_0.png")));
-  TEXTURES.add(new Texture(false, true, true, false, loadImage("files_3/0110_0.png")));
-  TEXTURES.add(new Texture(false, false, true, true, loadImage("files_3/0011_0.png")));
-  TEXTURES.add(new Texture(true, false, false, true, loadImage("files_3/1001_0.png")));
-  TEXTURES.add(new Texture(true, true, false, false, loadImage("files_3/1100_0.png")));
-  TEXTURES.add(new Texture(false, true, true, false, loadImage("files_3/0110_0.png")));
-  TEXTURES.add(new Texture(false, false, true, true, loadImage("files_3/0011_0.png")));
-  TEXTURES.add(new Texture(true, false, false, true, loadImage("files_3/1001_0.png")));
-  */
-  
   
   grid = new Tile_List(WIDTH, HEIGHT, TEXTURES);
   for(int x = 0; x < WIDTH; ++x) {
