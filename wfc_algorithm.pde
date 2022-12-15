@@ -1,10 +1,24 @@
 public class WFC_Algorithm {
     
+    public WFC_Algorithm(int cells_x, int cells_y) {
+
+    }
+
+    // add a texture, specifying connections and a weight to be used
+    public void add_texture(String file, boolean up, boolean right, boolean down, boolean left, float weight) {}
+
+    // add a texture, specifying where it connects to
+    // used to prohibit some paths from going to nowhere
+    public void add_texture_end(String file, int direction) {}
+
+    // set the weight for a cell to be populated
+    public void set_cell_weight(int x, int y, float weight) {}
+
+
     // store texture and possible connections
     class Texture {
-    // up, right, down, left
-    public boolean connections[];
-    public PImage texture_file;
+        public boolean connections[];
+        public PImage texture_file;
 
         public Texture(boolean up, boolean right, boolean down, boolean left, PImage texture_file) {
             this.connections = new boolean[] {up, right, down, left};
