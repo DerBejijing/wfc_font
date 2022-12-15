@@ -14,6 +14,11 @@ public class WFC_Algorithm {
     // set the weight for a cell to be populated
     public void set_cell_weight(int x, int y, float weight) {}
 
+    // solves the wave function
+    public void solve() {}
+
+    // saves the result
+    public void save() {}
 
     // store texture and possible connections
     class Texture {
