@@ -219,7 +219,6 @@ public class WFC_Algorithm {
                     this.tile_list.add(t_add);
                 }
             }
-            println(this.tile_list.size());
         }
 
 
