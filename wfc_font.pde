@@ -1,10 +1,16 @@
-final int TILES = 12;
-
+// set number of cells on the horizontal and vertical axis
+// should be kept at a 1:1 ratio for some reason
 final int WIDTH = 160;
 final int HEIGHT = 160;
+
+// adjust the cell size in pixels
+// this will only affect the quality when displaying
+// when exporting, the cell size will be the same as in the textures
 final int CELL_SIZE = 5;
 
+// when drawing, this will change the radius in which cells will be affected
 final int PEN_RADIUS = 2;
+
 
 boolean paint = false;
 
